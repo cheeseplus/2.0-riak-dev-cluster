@@ -62,3 +62,4 @@ Depending on your erlang cookie, you may have to use the commands with `sudo`.
 Updates by:
 * [Simon Vans-Colina](https://github.com/simonvc)
 * [Seth Thomas](https://github.com/cheeseplus)
+* [Joel Jacobson](https://github.com/joeljacobson)
