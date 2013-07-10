@@ -64,10 +64,6 @@ task :ping do
   end
 end
 
-desc "riak-admin ring-status"
-task :ring_status do
-    sh %{riak2/bin/riak-admin ring-status}
-    end 
     
 desc "riak-admin member-status"
     task :member_status do
@@ -83,7 +79,23 @@ desc "riak-admin test"
             sh %{riak5/bin/riak-admin test}
             end 
   
-  
+desc "riak-admin status"
+  task :status do
+    sh %{riak1/bin/riak-admin status}
+          end   
+          
+
+desc "riak-admin ring-status"
+  task :ring_status do
+      sh %{riak1/bin/riak-admin ring-status}
+          end   
+          
+ desc "riak-admin cluster-info"
+            task :cluster_info do
+              sh %{riak2/bin/riak-admin cluster-info}
+                    end   
+          
+          
   
 task :fetch_riak do
   sh "curl -L #{RIAK_DOWNLOAD_URL} | tar xz -" unless File.exist? "riak-#{RIAK_VERSION}"
