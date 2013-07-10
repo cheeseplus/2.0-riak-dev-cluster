@@ -71,8 +71,18 @@ task :ring_status do
     
 desc "riak-admin member-status"
     task :member_status do
-        sh %{riak2/bin/riak-admin member-status}
-        end 
+     sh %{riak2/bin/riak-admin member-status}
+       end 
+       
+desc "riak-admin test"
+           task :test do
+            sh %{riak1/bin/riak-admin test}
+            sh %{riak2/bin/riak-admin test}
+            sh %{riak3/bin/riak-admin test}
+            sh %{riak4/bin/riak-admin test}
+            sh %{riak5/bin/riak-admin test}
+            end 
+  
   
   
 task :fetch_riak do
