@@ -90,10 +90,6 @@ desc "riak-admin ring-status"
       sh %{riak1/bin/riak-admin ring-status}
           end   
           
- desc "riak-admin cluster-info"
-            task :cluster_info do
-              sh %{riak2/bin/riak-admin cluster-info}
-                    end   
           
           
   
