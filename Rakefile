@@ -49,7 +49,6 @@ desc "clear data from all riak nodes"
 task :clear => :stop do
   (1..NUM_NODES).each do |n|
     sh %{rm -rf riak#{n}}
-    sh %{git checkout riak#{n}}
   end
 end
 
@@ -90,21 +89,21 @@ desc "riak-admin ring-status"
           end   
 
           
- desc "set up map bucket-type"
+ desc "set up maps bucket-type"
    task :map_bucket do  
      sh %{riak1/bin/riak-admin bucket-type create maps '{"props":{"datatype":"map"}}'}
      sh %{riak1/bin/riak-admin bucket-type activate maps}
           end
 
- desc "set up set bucket-type"
+ desc "set up sets bucket-type"
    task :set_bucket do  
      sh %{riak1/bin/riak-admin bucket-type create sets '{"props":{"datatype":"set"}}'}
      sh %{riak1/bin/riak-admin bucket-type activate sets}
           end
 
- desc "set up counter bucket-type"
+ desc "set up counters bucket-type"
    task :counter_bucket do  
-     sh %{riak1/bin/riak-admin bucket-type create counters'{"props":{"datatype":"counter"}}'}
+     sh %{riak1/bin/riak-admin bucket-type create counters '{"props":{"datatype":"counter"}}'}
      sh %{riak1/bin/riak-admin bucket-type activate counters}
           end
 
