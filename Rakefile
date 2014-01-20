@@ -88,8 +88,28 @@ desc "riak-admin ring-status"
   task :ring_status do
       sh %{riak1/bin/riak-admin ring-status}
           end   
+
           
-                
+ desc "set up map bucket-type"
+   task :map_bucket do  
+     sh %{riak1/bin/riak-admin bucket-type create maps '{"props":{"datatype":"map"}}'}
+     sh %{riak1/bin/riak-admin bucket-type activate maps}
+          end
+
+ desc "set up set bucket-type"
+   task :set_bucket do  
+     sh %{riak1/bin/riak-admin bucket-type create sets '{"props":{"datatype":"set"}}'}
+     sh %{riak1/bin/riak-admin bucket-type activate sets}
+          end
+
+ desc "set up counter bucket-type"
+   task :counter_bucket do  
+     sh %{riak1/bin/riak-admin bucket-type create counters'{"props":{"datatype":"counter"}}'}
+     sh %{riak1/bin/riak-admin bucket-type activate counters}
+          end
+
+
+               
   
 task :fetch_riak do
   sh "curl -L #{RIAK_DOWNLOAD_URL} | tar xz -" unless File.exist? "riak-#{RIAK_VERSION}"
