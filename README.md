@@ -13,11 +13,11 @@ Easily run a 5-node [Riak](http://wiki.basho.com/Riak.html) cluster on OS X.
 
 Clone the repository:
 
-    $ git clone git://github.com/joeljacobson/riak-dev-cluster.git
+    $ git clone git://github.com/cheeseplus/2.0-riak-dev-cluster.git
 
 Go to the riak-dev-cluster directory:
 
-    $ cd riak-dev-cluster
+    $ cd 2.0-riak-dev-cluster
 
 There is a bootstrap command available that installs, starts and joins the riak cluster in one go:
 
