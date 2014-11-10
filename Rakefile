@@ -1,8 +1,9 @@
-RIAK_VERSION      = "2.0.0pre11"
+RIAK_VERSION      = "2.0.2"
 RIAK_DOWNLOAD_URL = "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/#{RIAK_VERSION}/osx/10.8/riak-#{RIAK_VERSION}-OSX-x86_64.tar.gz"
 NUM_NODES = 5
+RING_SIZE = 16
 
-#http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0pre11/osx/10.8/riak-2.0.0pre11-OSX-x86_64.tar.gz
+#http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/osx/10.8/riak-2.0.2-OSX-x86_64.tar.gz
 
 task :default => :help
 
@@ -17,7 +18,7 @@ task :bootstrap => [:install, :start, :join]
 desc "start all riak nodes"
 task :start do
   (1..NUM_NODES).each do |n|
-    sh %{ulimit -n 4096; ./riak#{n}/bin/riak start}
+    sh %{ulimit -n 65536; ./riak#{n}/bin/riak start}
   end
   puts "======================================="
   puts "Riak Dev Cluster started"
@@ -31,7 +32,7 @@ end
 desc "stop all riak nodes"
 task :stop do
   (1..NUM_NODES).each do |n|
-    sh %{ulimit -n 4096; ./riak#{n}/bin/riak stop} rescue "not running"
+    sh %{ulimit -n 65536; ./riak#{n}/bin/riak stop} rescue "not running"
   end
 end
 
@@ -117,6 +118,11 @@ end
 task :copy_riak do
   (1..NUM_NODES).each do |n|
     system %{cp -nr riak-#{RIAK_VERSION}/ riak#{n}}
+    system %(sed -i '' 's/riak@127.0.0.1/riak#{n}@127.0.0.1/' riak#{n}/etc/riak.conf)
+    system %(sed -i '' 's/127.0.0.1:8098/127.0.0.1:1#{n}098/' riak#{n}/etc/riak.conf)
+    system %(sed -i '' 's/127.0.0.1:8087/127.0.0.1:1#{n}087/' riak#{n}/etc/riak.conf)
+    system %(echo 'handoff.port = 1#{n}099' >> riak#{n}/etc/riak.conf)
+    system %(echo 'ring_size = #{RING_SIZE}' >> riak#{n}/etc/riak.conf)
   end
 end
 
